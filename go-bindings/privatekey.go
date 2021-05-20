@@ -1,7 +1,7 @@
 package blschia
 
-// #cgo LDFLAGS: -L../build -lbls -lstdc++
-// #cgo CXXFLAGS: -std=c++14 -I../src -I../build/_deps/relic-src/include -I../build/_deps/relic-build/include
+// #cgo LDFLAGS: -L../build -lbls -lstdc++ -lgmp
+// #cgo CXXFLAGS: -std=c++17 -I../src -I../build/_deps/relic-src/include -I../build/_deps/relic-build/include
 // #include <stdbool.h>
 // #include <stdlib.h>
 // #include "privatekey.h"
@@ -44,7 +44,7 @@ func (sk PrivateKey) Serialize() []byte {
 }
 
 // FromBytes ...
-func (sk PrivateKey) FromBytes(data []byte) PrivateKey  {
+func (sk PrivateKey) FromBytes(data []byte) PrivateKey {
 	cBytesPtr := C.CBytes(data)
 	defer C.free(cBytesPtr)
 	sk.sk = C.CPrivateKeyFromBytes(cBytesPtr, C.int(len(data)))

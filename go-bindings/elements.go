@@ -1,7 +1,7 @@
 package blschia
 
-// #cgo LDFLAGS: -L../build -lbls -lstdc++
-// #cgo CXXFLAGS: -std=c++14 -I../src -I../build/_deps/relic-src/include -I../build/_deps/relic-build/include
+// #cgo LDFLAGS: -L../build -lbls -lstdc++ -lgmp
+// #cgo CXXFLAGS: -std=c++17 -I../src -I../build/_deps/relic-src/include -I../build/_deps/relic-build/include
 // #include <stdbool.h>
 // #include <stdlib.h>
 // #include "blschia.h"
@@ -49,8 +49,9 @@ func (pk G1Element) Serialize() []byte {
 	defer C.free(ptr)
 	return C.GoBytes(ptr, C.CG1ElementSizeBytes())
 }
+
 // FromBytes ...
-func (pk G1Element) FromBytes(data []byte) G1Element  {
+func (pk G1Element) FromBytes(data []byte) G1Element {
 	cBytesPtr := C.CBytes(data)
 	defer C.free(cBytesPtr)
 	pk.pk = C.CG1ElementFromBytes(cBytesPtr, C.int(len(data)))
@@ -128,7 +129,7 @@ func (sign G2Element) Serialize() []byte {
 	return C.GoBytes(ptr, C.CG2ElementSizeBytes())
 }
 
-func (sign G2Element) FromBytes(data []byte) G2Element  {
+func (sign G2Element) FromBytes(data []byte) G2Element {
 	cBytesPtr := C.CBytes(data)
 	defer C.free(cBytesPtr)
 	sign.sign = C.CG2ElementFromBytes(cBytesPtr, C.int(len(data)))

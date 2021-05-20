@@ -1,6 +1,5 @@
 #include "elements.h"
 
-#include <cstring>
 #include <vector>
 
 #include "bls.hpp"
